@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Orders • ROSH</title>
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <h3>ROSH Admin</h3>
+            <nav>
+                <a href="/admin/index.html">Dashboard</a>
+                <a href="/admin/products.html">Products</a>
+                <a href="/admin/orders.html" class="active">Orders</a>
+                <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Manage Orders</h1>
+            <section class="card">
+                <table id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order Date</th>
+                            <th>Customer</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <div id="order-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Order Details</h2>
+            <div class="order-details-container">
+                <div class="customer-info">
+                    <h4>Customer & Shipping</h4>
+                    <p><strong>Name:</strong> <span id="modal-customer-name"></span></p>
+                    <p><strong>Phone:</strong> <span id="modal-customer-phone"></span></p>
+                    <p><strong>Address:</strong><br><span id="modal-customer-address"></span></p>
+                </div>
+                <div class="order-info">
+                    <h4>Order Summary</h4>
+                    <p><strong>Order Date:</strong> <span id="modal-order-date"></span></p>
+                    <p><strong>Total Price:</strong> <span id="modal-total-price"></span></p>
+                    <p><strong>Payment:</strong> <span id="modal-payment-method"></span></p>
+                    <p><strong>Status:</strong> <span id="modal-order-status"></span></p>
+                </div>
+                <div class="products-info">
+                    <h4>Products Ordered</h4>
+                    <ul id="modal-products-list">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/admin/admin.js"></script>
+    <script src="/admin/orders.js"></script>
+</body>
+</html>

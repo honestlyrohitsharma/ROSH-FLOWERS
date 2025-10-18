@@ -1,0 +1,389 @@
+/* admin/admin.css */
+
+/* 👇 ADD THIS BLOCK AT THE VERY TOP 👇 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* =================================
+   COLOR THEMES (LIGHT & DARK)
+   ================================= */
+:root {
+    /* Light Theme (Default) */
+    --bg-main: #FDF6E3;
+    --bg-sidebar: #002366;
+    --bg-sidebar-hover: #00338D;
+    --bg-card: #FFFFFF;
+    --text-main: #343434;
+    --text-sidebar: #FFFFFF;
+    --text-subtle: #6c757d;
+    --accent-gold: #D4AF37;
+    --accent-blue: #002366;
+    --border-color: rgba(0,0,0,0.1);
+    --shadow-color: rgba(0,0,0,0.05);
+    --danger: #d9534f;
+    --success: #5cb85c;
+}
+
+[data-theme="dark"] {
+    /* Dark Theme */
+    --bg-main: #0F172A;
+    --bg-sidebar: #1E293B;
+    --bg-sidebar-hover: #334155;
+    --bg-card: #1E293B;
+    --text-main: #E2E8F0;
+    --text-sidebar: #E2E8F0;
+    --text-subtle: #94A3B8;
+    --accent-gold: #FBBF24;
+    --accent-blue: #38BDF8;
+    --border-color: rgba(255,255,255,0.1);
+    --shadow-color: rgba(0,0,0,0.2);
+    --danger: #f87171;
+    --success: #4ade80;
+}
+
+/* =================================
+   GENERAL LAYOUT & STYLES
+   ================================= */
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+}
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 30px;
+    width: 100%;
+    transition: margin-left 0.3s;
+}
+
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+}
+
+h1, h2 {
+    color: var(--text-main);
+    transition: color 0.3s;
+}
+
+/* =================================
+   SIDEBAR
+   ================================= */
+.sidebar {
+    width: 240px;
+    background-color: var(--bg-sidebar);
+    color: var(--text-sidebar);
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar h3 {
+    text-align: center;
+    letter-spacing: 2px;
+}
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 40px;
+}
+.sidebar nav a {
+    color: var(--text-sidebar);
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+    background-color: var(--bg-sidebar-hover);
+}
+#logout-btn {
+    margin-top: auto;
+}
+
+/* =================================
+   CARDS & STATS
+   ================================= */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+.stat-card, .card {
+    background-color: var(--bg-card);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    margin-bottom: 20px;
+}
+.stat-card h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: var(--text-subtle);
+}
+.stat-card p {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 10px 0 0;
+    color: var(--accent-gold);
+}
+
+/* =================================
+   TABLES & FORMS
+   ================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+th {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+}
+.product-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.product-form input, .product-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+}
+.product-form button {
+    grid-column: 1 / -1;
+}
+
+/* =================================
+   BUTTONS & MODAL
+   ================================= */
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-edit {
+    background-color: var(--accent-gold);
+    color: var(--bg-sidebar);
+}
+.btn-delete {
+    background-color: var(--danger);
+    color: #fff;
+}
+.btn-deliver {
+    background-color: var(--success);
+    color: #fff;
+}
+
+#logout-btn, .product-form button {
+    background: var(--accent-blue);
+    color: var(--text-sidebar);
+    padding: 12px;
+    text-align: center;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+.modal-content {
+    background-color: var(--bg-card);
+    margin: 15% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+}
+.close-button {
+    color: var(--text-subtle);
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* =================================
+   THEME TOGGLE
+   ================================= */
+.theme-toggle {
+    background-color: var(--bg-sidebar-hover);
+    color: var(--text-sidebar);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* =================================
+   ORDER DETAILS MODAL
+   ================================= */
+.order-details-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.order-details-container h4 {
+    margin-top: 0;
+    color: var(--text-subtle);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.order-details-container p {
+    margin: 0 0 10px;
+    line-height: 1.5;
+}
+
+.products-info {
+    grid-column: 1 / -1;
+}
+
+#modal-products-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#modal-products-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#modal-products-list li:last-child {
+    border-bottom: none;
+}
+
+/* =================================
+   --- REVIEW PAGE STYLES ---
+   ================================= */
+.add-review-box {
+    background-color: var(--bg-card);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px var(--shadow-color);
+    margin-bottom: 20px;
+}
+
+.add-review-box input,
+.add-review-box textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+}
+
+.add-review-box button {
+    background-color: var(--accent-blue);
+    color: var(--text-sidebar);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.add-review-box button:hover {
+    background-color: var(--bg-sidebar-hover);
+}
+
+.review-list {
+    display: grid;
+    gap: 15px;
+}
+
+.review-card {
+    background-color: var(--bg-card);
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: transform 0.2s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-3px);
+}
+
+.review-card h3 {
+    margin: 0 0 5px;
+    color: var(--accent-blue);
+}
+
+.review-card p {
+    margin: 0 0 8px;
+    font-style: italic;
+    color: var(--text-main);
+}
+
+.review-card small {
+    color: var(--text-subtle);
+}
+
+.delete-btn {
+    background-color: var(--danger);
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    opacity: 0.9;
+}
