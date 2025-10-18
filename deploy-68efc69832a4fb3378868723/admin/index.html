@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard • ROSH</title>
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <h3>ROSH Admin</h3>
+            <nav>
+                <a href="/admin/index.html" class="active">Dashboard</a>
+                <a href="/admin/products.html">Products</a>
+                <a href="/admin/orders.html">Orders</a>
+                <a href="/admin/reviews.html">Reviews</a> <!-- ✅ New section -->
+                <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <h1>Dashboard</h1>
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <h2>Total Revenue</h2>
+                    <p id="total-revenue">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h2>Total Orders</h2>
+                    <p id="total-orders">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h2>Total Products</h2>
+                    <p id="total-products">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h2>Total Reviews</h2> <!-- ✅ New stat -->
+                    <p id="total-reviews">Loading...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/admin/admin.js"></script>
+
+    <script>
+        // ✅ Optional: Quick stat fetch for total reviews
+        document.addEventListener("DOMContentLoaded", async () => {
+            const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+            const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            try {
+                // Get total reviews count
+                const { count } = await supabase
+                    .from("review")
+                    .select("*", { count: "exact", head: true });
+                document.getElementById("total-reviews").textContent = count ?? 0;
+            } catch (err) {
+                console.error(err);
+                document.getElementById("total-reviews").textContent = "Error";
+            }
+        });
+    </script>
+</body>
+</html>

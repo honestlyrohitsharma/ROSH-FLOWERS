@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products • ROSH</title>
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <h3>ROSH Admin</h3>
+            <nav>
+                <a href="/admin/index.html">Dashboard</a>
+                <a href="/admin/products.html" class="active">Products</a>
+                <a href="/admin/orders.html">Orders</a>
+                <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Manage Products</h1>
+            <section class="card">
+                <h2>Add New Product</h2>
+                <form id="add-product-form" class="product-form">
+                    <input type="text" id="name" placeholder="Product Name" required>
+                    <input type="text" id="description" placeholder="Description" required>
+                    <select id="category" required>
+                        <option value="" disabled selected>Select a Category</option>
+                        <option value="All Flowers">All Flowers</option>
+                        <option value="Bouquets">Bouquets</option>
+                        <option value="Potted Plants">Potted Plants</option>
+                        <option value="For Anniversaries">For Anniversaries</option>
+                    </select>
+                    <input type="number" id="price" placeholder="Price (₹)" required>
+                    <input type="url" id="image_url" placeholder="Image URL" required>
+                    <button type="submit" class="btn">Add Product</button>
+                </form>
+            </section>
+            <section class="card">
+                <h2>Existing Products</h2>
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Product</h2>
+            <form id="edit-product-form" class="product-form">
+                <input type="hidden" id="edit-id">
+                <input type="text" id="edit-name" required>
+                <input type="text" id="edit-description" required>
+                <select id="edit-category" required>
+                    <option value="All Flowers">All Flowers</option>
+                    <option value="Bouquets">Bouquets</option>
+                    <option value="Potted Plants">Potted Plants</option>
+                    <option value="For Anniversaries">For Anniversaries</option>
+                </select>
+                <input type="number" id="edit-price" required>
+                <input type="url" id="edit-image_url" required>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/admin/admin.js"></script>
+    <script src="/admin/products.js"></script>
+</body>
+</html>
