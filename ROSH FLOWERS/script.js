@@ -1,14 +1,10 @@
-// ===================================================================
 // 1. CONNECT TO YOUR SUPABASE DATABASE
-// ===================================================================
-const SUPABASE_URL = 'https://rjefehuahgdqhtnofnrs.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZWZlaHVhaGdkcWh0bm9mbnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0MTg4NzgsImV4cCI6MjA3NTk5NDg3OH0.MT7B0s023uBp8D4HWM8VfUA0DNnYXBNFlbRoLzDmroM';
+const SUPABASE_URL = 'SUPABASE_PRO_URL';
+const SUPABASE_ANON_KEY = 'ANON_KEY';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ===================================================================
 // 2. FETCH AND DISPLAY PRODUCTS (WITH SEARCH)
-// ===================================================================
 async function fetchAndDisplayProducts(searchTerm = '') {
     const productsContainer = document.querySelector(".products");
     if (!productsContainer) return;
@@ -16,9 +12,9 @@ async function fetchAndDisplayProducts(searchTerm = '') {
 
     let query = supabaseClient.from('products').select('*');
 
-    // If a search term is provided, filter the query
+
     if (searchTerm) {
-        // .ilike is a case-insensitive "contains" search on the 'name' column
+        
         query = query.ilike('name', `%${searchTerm}%`);
     }
 
@@ -35,7 +31,7 @@ async function fetchAndDisplayProducts(searchTerm = '') {
         return;
     }
 
-    productsContainer.innerHTML = ''; // Clear the loading/searching message
+    productsContainer.innerHTML = ''; 
     data.forEach(product => {
         const card = document.createElement('article');
         card.classList.add('card');
@@ -50,10 +46,7 @@ async function fetchAndDisplayProducts(searchTerm = '') {
         productsContainer.appendChild(card);
     });
 }
-
-// ===================================================================
 // 3. FETCH AND DISPLAY REVIEWS
-// ===================================================================
 async function fetchAndDisplayReviews() {
     const reviewsPanel = document.getElementById('reviews-panel');
     if (!reviewsPanel) return;
@@ -62,11 +55,11 @@ async function fetchAndDisplayReviews() {
 
     if (error || !data || data.length === 0) {
         const title = reviewsPanel.querySelector('h3').outerHTML;
-        reviewsPanel.innerHTML = title + '<p>No reviews yet.</p>'; // Keep title, add message
+        reviewsPanel.innerHTML = title + '<p>No reviews yet.</p>'; 
         return;
     }
     
-    // Clear the loading message, but keep the title
+    
     const title = reviewsPanel.querySelector('h3').outerHTML;
     reviewsPanel.innerHTML = title;
 
@@ -81,9 +74,7 @@ async function fetchAndDisplayReviews() {
     });
 }
 
-// ===================================================================
-// 4. SHOPPING CART LOGIC
-// ===================================================================
+// 4. SHOPPING CART
 function addToCart(productId, productName) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const existingProduct = cart.find(item => item.id === productId);
@@ -109,9 +100,7 @@ function updateCartCount() {
     }
 }
 
-// ===================================================================
 // 5. USER AUTHENTICATION
-// ===================================================================
 async function signInWithGoogle() {
     await supabaseClient.auth.signInWithOAuth({ provider: 'google' });
 }
@@ -135,15 +124,11 @@ function updateUserUI(user) {
     updateCartCount();
 }
 
-// ===================================================================
 // 6. INITIALIZE PAGE AND EVENT LISTENERS
-// ===================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Fetch initial data when the page loads
     fetchAndDisplayProducts();
     fetchAndDisplayReviews();
     
-    // Setup search functionality
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
 
@@ -152,14 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchAndDisplayProducts(searchInput.value.trim());
     });
 
-    // Handle clearing the search bar
+    
     searchInput.addEventListener('input', () => {
         if (searchInput.value.trim() === '') {
-            fetchAndDisplayProducts(); // Show all products if search is cleared
+            fetchAndDisplayProducts();
         }
     });
-
-    // Listen for changes in login status
     supabaseClient.auth.onAuthStateChange((_event, session) => {
         updateUserUI(session?.user);
     });
@@ -167,4 +150,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize footer year
     const yearEl = document.getElementById("year");
     if (yearEl) yearEl.textContent = new Date().getFullYear();
+
 });
