@@ -1,17 +1,13 @@
-/* admin/admin.css */
 
-/* 👇 ADD THIS BLOCK AT THE VERY TOP 👇 */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* =================================
-   COLOR THEMES (LIGHT & DARK)
-   ================================= */
+
 :root {
-    /* Light Theme (Default) */
+   
     --bg-main: #FDF6E3;
     --bg-sidebar: #002366;
     --bg-sidebar-hover: #00338D;
@@ -28,7 +24,7 @@
 }
 
 [data-theme="dark"] {
-    /* Dark Theme */
+   
     --bg-main: #0F172A;
     --bg-sidebar: #1E293B;
     --bg-sidebar-hover: #334155;
@@ -44,9 +40,7 @@
     --success: #4ade80;
 }
 
-/* =================================
-   GENERAL LAYOUT & STYLES
-   ================================= */
+
 body {
     margin: 0;
     font-family: system-ui, -apple-system, sans-serif;
@@ -88,9 +82,7 @@ h1, h2 {
     transition: color 0.3s;
 }
 
-/* =================================
-   SIDEBAR
-   ================================= */
+
 .sidebar {
     width: 240px;
     background-color: var(--bg-sidebar);
@@ -126,9 +118,6 @@ h1, h2 {
     margin-top: auto;
 }
 
-/* =================================
-   CARDS & STATS
-   ================================= */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -153,9 +142,7 @@ h1, h2 {
     color: var(--accent-gold);
 }
 
-/* =================================
-   TABLES & FORMS
-   ================================= */
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -187,9 +174,7 @@ th {
     grid-column: 1 / -1;
 }
 
-/* =================================
-   BUTTONS & MODAL
-   ================================= */
+
 .btn {
     padding: 8px 12px;
     border: none;
@@ -247,9 +232,7 @@ th {
     cursor: pointer;
 }
 
-/* =================================
-   THEME TOGGLE
-   ================================= */
+
 .theme-toggle {
     background-color: var(--bg-sidebar-hover);
     color: var(--text-sidebar);
@@ -261,9 +244,7 @@ th {
     margin-top: 20px;
 }
 
-/* =================================
-   ORDER DETAILS MODAL
-   ================================= */
+
 .order-details-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -305,9 +286,6 @@ th {
     border-bottom: none;
 }
 
-/* =================================
-   --- REVIEW PAGE STYLES ---
-   ================================= */
 .add-review-box {
     background-color: var(--bg-card);
     padding: 20px;
@@ -387,3 +365,4 @@ th {
 .delete-btn:hover {
     opacity: 0.9;
 }
+
