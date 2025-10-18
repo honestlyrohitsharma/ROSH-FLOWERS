@@ -1,16 +1,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // First, verify the user is an admin
+   
     const isAdmin = await checkAdminStatus();
     if (!isAdmin) return;
 
-    // Get all necessary elements from the DOM
+    
     const productsTableBody = document.querySelector('#products-table tbody');
     const addProductForm = document.getElementById('add-product-form');
     const editModal = document.getElementById('edit-modal');
     const editProductForm = document.getElementById('edit-product-form');
     const closeModalBtn = document.querySelector('.close-button');
 
-    // --- LOAD ALL PRODUCTS ---
     async function loadProducts() {
         const { data: products, error } = await supabaseClient.from('products').select('*').order('name');
         if (error) {
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        productsTableBody.innerHTML = ''; // Clear table before populating
+        productsTableBody.innerHTML = ''; 
         products.forEach(product => {
             const row = `
                 <tr>
@@ -34,7 +33,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // --- ADD NEW PRODUCT ---
     addProductForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const newProduct = {
@@ -51,17 +49,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             alert('Product added successfully!');
             addProductForm.reset();
-            loadProducts(); // Refresh the product list
+            loadProducts(); 
         }
     });
 
-    // --- EDIT & DELETE LOGIC ---
     productsTableBody.addEventListener('click', async (e) => {
         const target = e.target;
         const productId = target.dataset.id;
         if (!productId) return;
 
-        // DELETE product
+        
         if (target.classList.contains('btn-delete')) {
             if (confirm('Are you sure you want to delete this product?')) {
                 const { error } = await supabaseClient.from('products').delete().eq('id', productId);
@@ -70,14 +67,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        // EDIT product (Open Modal)
+     
         if (target.classList.contains('btn-edit')) {
             const { data: product, error } = await supabaseClient.from('products').select('*').eq('id', productId).single();
             if (error) {
                 alert('Could not fetch product details.');
                 return;
             }
-            // Populate modal form with product data
             document.getElementById('edit-id').value = product.id;
             document.getElementById('edit-name').value = product.name;
             document.getElementById('edit-description').value = product.description;
@@ -88,7 +84,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // --- SAVE CHANGES FROM EDIT MODAL ---
     editProductForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const productId = document.getElementById('edit-id').value;
@@ -109,10 +104,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // --- CLOSE MODAL ---
+   
     closeModalBtn.onclick = () => editModal.style.display = 'none';
     window.onclick = (e) => { if (e.target == editModal) editModal.style.display = 'none'; };
-
-    // Initial load of products when page is ready
     loadProducts();
+
 });
