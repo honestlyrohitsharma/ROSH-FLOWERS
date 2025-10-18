@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // First, verify the user is an admin
+    
     const isAdmin = await checkAdminStatus();
     if (!isAdmin) return;
 
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const orderModal = document.getElementById('order-details-modal');
     const closeModalBtn = orderModal.querySelector('.close-button');
 
-    // --- LOAD ALL ORDERS AND PRODUCTS ---
+    
     async function loadOrders() {
         const [ordersResponse, productsResponse] = await Promise.all([
             supabaseClient.from('orders').select('*').order('created_at', { ascending: false }),
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const orderDate = new Date(order.created_at).toLocaleDateString('en-IN');
             const customerName = JSON.parse(order.shipping_address).name;
 
-            // Generate action buttons dynamically
+            
             let actionButtons = '';
             if (order.status !== 'Delivered' && order.status !== 'Spam') {
                 actionButtons = `
@@ -59,13 +59,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.productsMap = productsMap;
     }
 
-    // --- HANDLE TABLE CLICKS ---
+ 
     ordersTableBody.addEventListener('click', async (e) => {
         const target = e.target;
         const orderId = target.dataset.id;
         if (!orderId) return;
-
-        // MARK AS DELIVERED
         if (target.classList.contains('btn-deliver')) {
             if (confirm('Mark this order as delivered?')) {
                 const { error } = await supabaseClient
@@ -77,7 +75,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        // MARK AS SPAM
         if (target.classList.contains('btn-spam')) {
             if (confirm('Mark this order as SPAM?')) {
                 const { error } = await supabaseClient
@@ -89,7 +86,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        // DELETE ORDER
         if (target.classList.contains('btn-delete')) {
             if (confirm('Are you sure you want to permanently DELETE this order?')) {
                 const { error } = await supabaseClient
@@ -101,13 +97,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        // VIEW DETAILS
+
         if (target.classList.contains('btn-edit')) {
             populateAndShowModal(orderId);
         }
     });
 
-    // --- POPULATE AND SHOW MODAL ---
+   
     function populateAndShowModal(orderId) {
         const order = window.currentOrdersData.find(o => o.id == orderId);
         if (!order) return;
@@ -134,10 +130,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         orderModal.style.display = 'block';
     }
 
-    // --- CLOSE MODAL LOGIC ---
     closeModalBtn.onclick = () => orderModal.style.display = 'none';
     window.onclick = (e) => { if (e.target == orderModal) orderModal.style.display = 'none'; };
 
-    // Initial Load
+    
     loadOrders();
 });
+
