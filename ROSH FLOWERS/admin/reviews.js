@@ -1,17 +1,16 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-// 🔹 Replace with your Supabase credentials
 const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
 const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Elements
+
 const reviewList = document.getElementById("reviewList");
 const addBtn = document.getElementById("addReviewBtn");
 const nameInput = document.getElementById("customerName");
 const quoteInput = document.getElementById("quote");
 
-// Load all reviews
+
 async function loadReviews() {
   const { data, error } = await supabase.from("review").select("*").order("created_at", { ascending: false });
   if (error) {
@@ -33,7 +32,7 @@ async function loadReviews() {
     reviewList.appendChild(div);
   });
 
-  // Delete buttons
+
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const id = btn.getAttribute("data-id");
@@ -43,7 +42,7 @@ async function loadReviews() {
   });
 }
 
-// Add review
+
 addBtn.addEventListener("click", async () => {
   const name = nameInput.value.trim();
   const quote = quoteInput.value.trim();
@@ -65,3 +64,4 @@ addBtn.addEventListener("click", async () => {
 });
 
 loadReviews();
+
