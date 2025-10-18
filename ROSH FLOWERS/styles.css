@@ -1,5 +1,5 @@
 :root {
-  /* Royal Color Palette */
+ 
   --brand-gold: #D4AF37;
   --brand-blue: #002366;
   --bg-cream: #FDF6E3;
@@ -66,16 +66,14 @@ a {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 4px;
-  white-space: nowrap; /* Prevents name from wrapping */
+  white-space: nowrap; 
 }
-
-/* CORRECTED UNDERLINE STYLES */
 .brand-topline,
 .brand-underline {
   height: 2px;
   background: var(--text-charcoal);
   opacity: 0.3;
-  width: 100%; /* Will be 100% of the brand name width */
+  width: 100%; 
 }
 .brand-underline {
   background: linear-gradient(90deg, var(--brand-gold), var(--brand-blue));
@@ -107,7 +105,7 @@ a {
 }
 
 .search-container {
-    flex-grow: 1; /* This will now work correctly */
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     padding: 0 2rem;
@@ -129,7 +127,6 @@ a {
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
 }
 
-/* ... all other styles from before remain the same ... */
 
 .section-heading { margin: 18px auto 8px; border-top: var(--line); padding-top: 14px; }
 .section-heading h2 { margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: .2em; font-size: 18px; text-align: center; }
@@ -168,4 +165,5 @@ a {
 .form-group { display: flex; flex-direction: column; gap: 4px; }
 .form-group.full-width { grid-column: 1 / -1; }
 .address-form-grid input:focus { outline: none; border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgba(0, 35, 102, 0.15); }
+
 .cod-notice { margin-top: 1.5rem; padding: 10px; background-color: rgba(0,0,0,0.05); border-radius: 8px; text-align: center; font-size: 14px; }
