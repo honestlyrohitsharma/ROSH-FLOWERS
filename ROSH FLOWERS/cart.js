@@ -1,25 +1,19 @@
-// ===================================================================
-// 1. CONNECT TO YOUR SUPABASE DATABASE
-// ===================================================================
-const SUPABASE_URL = 'https://rjefehuahgdqhtnofnrs.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqZWZlaHVhaGdkcWh0bm9mbnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0MTg4NzgsImV4cCI6MjA3NTk5NDg3OH0.MT7B0s023uBp8D4HWM8VfUA0DNnYXBNFlbRoLzDmroM';
+
+const SUPABASE_URL = '';
+const SUPABASE_ANON_KEY = '';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ===================================================================
+
 // 2. LOCATION CONFIGURATION
-// ===================================================================
-const STORE_LAT = 23.3135; // YBN Public School, Ranchi
+const STORE_LAT = 23.3135;
 const STORE_LON = 85.3045;
 
-// Calculates distance between two GPS coordinates
 function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; const dLat = (lat2-lat1) * Math.PI / 180; const dLon = (lon2-lon1) * Math.PI / 180; const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2); const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); return R * c;
 }
 
-// ===================================================================
 // 3. DISPLAY CART ITEMS & DYNAMIC FUNCTIONS
-// ===================================================================
 async function displayCartItems() {
     const cartItemsContainer = document.getElementById('cart-items-container'); 
     const totalPriceElement = document.getElementById('total-price'); 
@@ -90,9 +84,7 @@ function removeFromCart(productId) {
 window.updateQuantity = updateQuantity; 
 window.removeFromCart = removeFromCart;
 
-// ===================================================================
 // 4. SIMPLIFIED COD CHECKOUT FLOW
-// ===================================================================
 async function handleCheckout(event) {
     event.preventDefault();
 
@@ -130,8 +122,7 @@ async function handleCheckout(event) {
         checkoutBtn.textContent = 'Placing Order...';
         const { data: { session } } = await supabaseClient.auth.getSession();
         if (!session) { /* handle not logged in */ return; }
-        
-        // Recalculate total price on the server-side for security
+      
         let finalPrice = 0;
         const cart = JSON.parse(localStorage.getItem('cart'));
         const productIds = cart.map(item => item.id);
@@ -172,13 +163,11 @@ async function handleCheckout(event) {
     });
 }
 
-// ===================================================================
-// 5. RUN EVERYTHING WHEN THE PAGE LOADS
-// ===================================================================
 document.addEventListener('DOMContentLoaded', () => {
     displayCartItems();
     const checkoutForm = document.getElementById('checkout-form');
     if (checkoutForm) {
         checkoutForm.addEventListener('submit', handleCheckout);
     }
+
 });
